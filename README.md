@@ -36,7 +36,7 @@ pod "ImageMaskTransition"
 
 ## Useage
 
-Hold a property of firstViewController
+Hold a property of `ImageMaskTransition` in firstViewController
 
 ```
 var imageMaskTransiton:ImageMaskTransition?
@@ -62,10 +62,11 @@ self.navigationController?.delegate = imageMaskTransiton
 self.navigationController?.pushViewController(dvc, animated: true)
 ```
 
+
 ## Author
 
 Leo, leomobiledeveloper@gmail.com
 
 ## License
 
-PullToRefreshKit is available under the MIT license. See the LICENSE file for more info.
+ImageMaskTransition is available under the MIT license. See the LICENSE file for more info.
