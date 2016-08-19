@@ -40,7 +40,6 @@ Hold a property of firstViewController
 
 ```
 var imageMaskTransiton:ImageMaskTransition?
-
 ```
 
 Present a View Controller

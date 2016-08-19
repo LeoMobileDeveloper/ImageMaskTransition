@@ -10,7 +10,7 @@ This is a ViewController transition to create beautiful image transition between
   s.homepage         = 'https://github.com/LeoMobileDeveloper/ImageMaskTransition'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Leo' => 'leomobiledeveloper@gmail.com' }
-  s.source           = { :git => 'https://github.com/LeoMobileDeveloper/PullToRefreshKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/LeoMobileDeveloper/ImageMaskTransition.git', :tag => s.version.to_s }
   s.ios.deployment_target = '8.0'
   s.source_files = 'Classes/**/*'
 end
