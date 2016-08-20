@@ -14,9 +14,11 @@
 )](http://mit-license.org)
 
 Present then Dismiss
+<p align="center">
 
-<img src="https://raw.github.com/LeoMobileDeveloper/ImageMaskTransition/master/Screenshot/demo.gif" width="300"/>
+<img src="https://raw.github.com/LeoMobileDeveloper/ImageMaskTransition/master/Screenshot/demo.gif" width="200"/>
 
+</p>
 ## Require
 
 - iOS 8
