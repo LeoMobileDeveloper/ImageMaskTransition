@@ -44,6 +44,8 @@ var imageMaskTransiton:ImageMaskTransition?
 
 Present a View Controller
 
+The frame of `toImageView` must be the final frame after layout
+
 ```
 let dvc = DetailViewController()
 let config = TransitionConfig.defaultConfig(fromImageView: cell.imageView, toImageView:dvc.imageView)
