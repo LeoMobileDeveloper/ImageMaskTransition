@@ -45,7 +45,7 @@ class ViewController: UICollectionViewController {
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionCell
         
-        //Hold Create a detail controller,the frame of toImageView in viewDidLoad should be the same after layoutsubviews
+        //Create a detail controller,the frame of toImageView in viewDidLoad should be the same after layoutsubviews
         let dvc = DetailViewController()
         let config = TransitionConfig.defaultConfig(fromImageView: cell.imageView, toImageView:dvc.imageView)
         imageMaskTransiton =  ImageMaskTransition(config: config)

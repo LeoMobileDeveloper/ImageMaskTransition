@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ImageMaskTransition'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Simple but powerful and beautiful ViewController transtion'
   s.description      = <<-DESC
 This is a ViewController transition to create beautiful image transition between ViewControllers

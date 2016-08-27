@@ -8,26 +8,26 @@
 
 import UIKit
 
-struct TransitionConfig{
-    var fromImageView:UIImageView
-    var toImageView:UIImageView?
-    var blurRadius:CGFloat = 3.0
-    var presentDuration = 1.6
-    var dismissDuration = 1.3
-    static func defaultConfig(fromImageView fromImageView:UIImageView,toImageView:UIImageView)->TransitionConfig{
+public struct TransitionConfig{
+   public  var fromImageView:UIImageView
+   public  var toImageView:UIImageView?
+   public  var blurRadius:CGFloat = 3.0
+   public  var presentDuration = 1.6
+   public var dismissDuration = 1.3
+   public static func defaultConfig(fromImageView fromImageView:UIImageView,toImageView:UIImageView)->TransitionConfig{
         return TransitionConfig(fromImageView: fromImageView, toImageView: toImageView, blurRadius: 3.0, presentDuration: 1.6, dismissDuration: 1.3)
     }
 }
-class ImageMaskTransition: NSObject,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate{
-    var config:TransitionConfig
+public class ImageMaskTransition: NSObject,UINavigationControllerDelegate,UIViewControllerTransitioningDelegate{
+    public let config:TransitionConfig
     let animator:ImageMaskAnimator
-    init(config:TransitionConfig){
+    public init(config:TransitionConfig){
         self.config = config
         self.animator = ImageMaskAnimator(config: config)
         super.init()
     }
     // MARK: - UINavigationControllerDelegate -
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .Pop:
             self.animator.transitionType = ImageMaskTransitionType.Dismisss
@@ -40,11 +40,11 @@ class ImageMaskTransition: NSObject,UINavigationControllerDelegate,UIViewControl
         }
     }
     // MARK: - UIViewControllerTransitioningDelegate -
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.animator.transitionType = ImageMaskTransitionType.Present
         return self.animator
     }
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.animator.transitionType = ImageMaskTransitionType.Dismisss
         return self.animator
     }
