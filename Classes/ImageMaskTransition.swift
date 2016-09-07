@@ -9,10 +9,10 @@
 import UIKit
 
 public struct TransitionConfig{
-   public  var fromImageView:UIImageView
-   public  var toImageView:UIImageView?
-   public  var blurRadius:CGFloat = 3.0
-   public  var presentDuration = 1.6
+   public var fromImageView:UIImageView
+   public var toImageView:UIImageView?
+   public var blurRadius:CGFloat = 3.0
+   public var presentDuration = 1.6
    public var dismissDuration = 1.3
    public static func defaultConfig(fromImageView fromImageView:UIImageView,toImageView:UIImageView)->TransitionConfig{
         return TransitionConfig(fromImageView: fromImageView, toImageView: toImageView, blurRadius: 3.0, presentDuration: 1.6, dismissDuration: 1.3)

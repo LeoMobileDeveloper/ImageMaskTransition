@@ -14,6 +14,7 @@
 )](http://mit-license.org)
 
 Present then Dismiss
+
 <p align="center">
 
 <img src="https://raw.github.com/LeoMobileDeveloper/ImageMaskTransition/master/Screenshot/demo.gif" width="200"/>
@@ -74,3 +75,9 @@ Leo, leomobiledeveloper@gmail.com
 ## License
 
 ImageMaskTransition is available under the MIT license. See the LICENSE file for more info.
+
+## 中文
+关于实现原理，参见这片博客
+
+[实现一个复杂动画的界面转场（Swift）](http://blog.csdn.net/hello_hwc/article/details/52265854)
+
