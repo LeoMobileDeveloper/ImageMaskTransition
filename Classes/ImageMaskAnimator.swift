@@ -32,6 +32,12 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
         maskContentView.backgroundColor = UIColor.lightGrayColor()
         
         if self.transitionType == .Present {
+            let fromImageView = self.config.fromImageView
+            fromImageView.hidden = true
+            let adjustFromRect = fromImageView.convertRect(fromImageView.bounds, toView: containView)
+            
+            let toImageView = self.config.toImageView!
+            toImageView.hidden = true
             //Create Content Blur View
             #if (arch(i386) || arch(x86_64)) && os(iOS)
                 print("Wow,CIFilter is too slow on simulator,So I disable blur on Simulator")
@@ -42,10 +48,7 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
             maskContentView.frame = containView.bounds
             containView.addSubview(self.maskContentView)
             
-            let fromImageView = self.config.fromImageView
-            let adjustFromRect = fromImageView.convertRect(fromImageView.bounds, toView: containView)
-            
-            let toImageView = self.config.toImageView!
+ 
             let adjustToRect = toImageView.convertRect(toImageView.bounds, toView: containView)
 
             imageView = UIImageView(frame: adjustFromRect)
@@ -78,6 +81,8 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
                         self.maskContentView = nil
                         self.imageView = nil
                         transitionContext.completeTransition(true)
+                        toImageView.hidden = false
+                        fromImageView.hidden = false
                     })
                 }
             }
@@ -92,6 +97,8 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
             
             let fromImageView = self.config.fromImageView
             let toImageView = self.config.toImageView!
+            fromImageView.hidden = true
+            toImageView.hidden = true
             let adjustFromRect = fromImageView.convertRect(fromImageView.bounds, toView: containView)
             let adjustToRect = toImageView.convertRect(toImageView.bounds, toView: containView)
             imageView = UIImageView(frame:adjustToRect)
@@ -118,6 +125,8 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
                     self.config.toImageView = nil
                     containView.addSubview(toView)
                     transitionContext.completeTransition(true)
+                    toImageView.hidden = false
+                    fromImageView.hidden = false
                     //Animation phase 2,change transform to default,clear shadow
                 }
 
