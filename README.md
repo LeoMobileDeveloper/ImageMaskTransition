@@ -8,7 +8,7 @@
 
  [![Version](https://img.shields.io/cocoapods/v/ImageMaskTransition.svg?style=flat)](http://cocoapods.org/pods/ImageMaskTransition)  [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
- [![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
+ [![Language](https://img.shields.io/badge/language-swift%203.0-brightgreen.svg?style=flat
 )](https://developer.apple.com/swift)
  [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
