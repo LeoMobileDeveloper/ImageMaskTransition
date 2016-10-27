@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 extension UIView{
-    func maskFrom(fromRect:CGRect,duration:NSTimeInterval ,complete:()->() = {}){
+    func maskFrom(_ fromRect:CGRect,duration:TimeInterval ,complete:@escaping ()->() = {}){
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             complete()
         }
         let maskLayer = CAShapeLayer()
-        let fromCenter = CGPointMake(fromRect.origin.x + fromRect.size.width / 2.0, fromRect.origin.y + fromRect.size.height / 2)
+        let fromCenter = CGPoint(x: fromRect.origin.x + fromRect.size.width / 2.0, y: fromRect.origin.y + fromRect.size.height / 2)
         let fromRadius = min(fromRect.width/2,fromRect.height/2)
         let fromPath = UIBezierPath(arcCenter: fromCenter, radius: fromRadius, startAngle: 0, endAngle: CGFloat(M_PI) * 2, clockwise: true)
 
@@ -32,24 +32,24 @@ extension UIView{
 
         let toPath = UIBezierPath(arcCenter: fromCenter, radius: toRadius, startAngle: 0, endAngle: CGFloat(M_PI) * 2, clockwise: true)
         
-        maskLayer.path = toPath.CGPath
+        maskLayer.path = toPath.cgPath
         let basicAnimation = CABasicAnimation(keyPath: "path")
         basicAnimation.duration = duration
-        basicAnimation.fromValue = fromPath.CGPath
-        basicAnimation.toValue = toPath.CGPath
+        basicAnimation.fromValue = fromPath.cgPath
+        basicAnimation.toValue = toPath.cgPath
         basicAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
-        maskLayer.addAnimation(basicAnimation, forKey: "pathMask")
+        maskLayer.add(basicAnimation, forKey: "pathMask")
         self.layer.mask = maskLayer
         CATransaction.commit()
     }
-    func maskTo(toRect:CGRect,duration:NSTimeInterval ,complete:()->() = {}){
+    func maskTo(_ toRect:CGRect,duration:TimeInterval ,complete:@escaping ()->() = {}){
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             complete()
         }
         let maskLayer = CAShapeLayer()
-        let toCenter = CGPointMake(toRect.origin.x + toRect.size.width / 2.0, toRect.origin.y + toRect.size.height / 2)
+        let toCenter = CGPoint(x: toRect.origin.x + toRect.size.width / 2.0, y: toRect.origin.y + toRect.size.height / 2)
         let toRadius:CGFloat = 0.001
         let toPath = UIBezierPath(arcCenter: toCenter, radius: toRadius, startAngle: 0, endAngle: CGFloat(M_PI) * 2, clockwise: true)
         
@@ -65,39 +65,39 @@ extension UIView{
         
         let fromPath = UIBezierPath(arcCenter: toCenter, radius: fromRadius, startAngle: 0, endAngle: CGFloat(M_PI) * 2, clockwise: true)
         
-        maskLayer.path = toPath.CGPath
+        maskLayer.path = toPath.cgPath
         let basicAnimation = CABasicAnimation(keyPath: "path")
         basicAnimation.duration = duration
-        basicAnimation.fromValue = fromPath.CGPath
-        basicAnimation.toValue = toPath.CGPath
+        basicAnimation.fromValue = fromPath.cgPath
+        basicAnimation.toValue = toPath.cgPath
         basicAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
-        maskLayer.addAnimation(basicAnimation, forKey: "pathMask")
+        maskLayer.add(basicAnimation, forKey: "pathMask")
         self.layer.mask = maskLayer
         CATransaction.commit()
     }
-    func blurScreenShot(blurRadius:CGFloat)->UIImage?{
+    func blurScreenShot(_ blurRadius:CGFloat)->UIImage?{
         guard self.superview != nil else{
             return nil
         }
         UIGraphicsBeginImageContextWithOptions(CGSize(width: frame.width, height: frame.height), false, 1)
-        layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
         guard let blur = CIFilter(name: "CIGaussianBlur") else{
             return nil
         }
-        blur.setValue(CIImage(image: image), forKey: kCIInputImageKey)
+        blur.setValue(CIImage(image: image!), forKey: kCIInputImageKey)
         blur.setValue(blurRadius, forKey: kCIInputRadiusKey)
         let ciContext  = CIContext(options: nil)
-        let result = blur.valueForKey(kCIOutputImageKey) as! CIImage!
+        let result = blur.value(forKey: kCIOutputImageKey) as! CIImage!
         let boundingRect = CGRect(x:0,
                                   y: 0,
                                   width: frame.width,
                                   height: frame.height)
         
-        let cgImage = ciContext.createCGImage(result, fromRect: boundingRect)
-        let filteredImage = UIImage(CGImage: cgImage)
+        let cgImage = ciContext.createCGImage(result!, from: boundingRect)
+        let filteredImage = UIImage(cgImage: cgImage!)
         return filteredImage
     }
 }

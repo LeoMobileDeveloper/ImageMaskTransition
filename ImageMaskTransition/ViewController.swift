@@ -30,20 +30,20 @@ class ViewController: UICollectionViewController {
     var useModalPresent = true 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.registerClass(CollectionCell.self, forCellWithReuseIdentifier: "cell")
-        self.collectionView?.backgroundColor = UIColor.whiteColor()
+        self.collectionView?.register(CollectionCell.self, forCellWithReuseIdentifier: "cell")
+        self.collectionView?.backgroundColor = UIColor.white
     }
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as? CollectionCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CollectionCell
         cell?.imageView.image = UIImage(named: "movie.jpg")
         return cell!
     }
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 40
     }
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionCell
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let cell = collectionView.cellForItem(at: indexPath) as! CollectionCell
         
         //Create a detail controller,the frame of toImageView in viewDidLoad should be the same after layoutsubviews
         let dvc = DetailViewController()
@@ -51,7 +51,7 @@ class ViewController: UICollectionViewController {
         imageMaskTransiton =  ImageMaskTransition(config: config)
         if useModalPresent{
             dvc.transitioningDelegate = imageMaskTransiton
-            presentViewController(dvc, animated: true, completion: nil)
+            present(dvc, animated: true, completion: nil)
         }else{
             self.navigationController?.delegate = imageMaskTransiton
             self.navigationController?.pushViewController(dvc, animated: true)

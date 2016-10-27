@@ -23,21 +23,21 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
         self.config = config
         super.init()
     }
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
-        let containView = transitionContext.containerView()!
-        let frame = UIScreen.mainScreen().bounds
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)!
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
+        let containView = transitionContext.containerView
+        let frame = UIScreen.main.bounds
         maskContentView = UIImageView(frame: frame)
-        maskContentView.backgroundColor = UIColor.lightGrayColor()
+        maskContentView.backgroundColor = UIColor.lightGray
         
         if self.transitionType == .Present {
             let fromImageView = self.config.fromImageView
-            fromImageView.hidden = true
-            let adjustFromRect = fromImageView.convertRect(fromImageView.bounds, toView: containView)
+            fromImageView.isHidden = true
+            let adjustFromRect = fromImageView.convert(fromImageView.bounds, to: containView)
             
             let toImageView = self.config.toImageView!
-            toImageView.hidden = true
+            toImageView.isHidden = true
             //Create Content Blur View
             #if (arch(i386) || arch(x86_64)) && os(iOS)
                 print("Wow,CIFilter is too slow on simulator,So I disable blur on Simulator")
@@ -49,40 +49,40 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
             containView.addSubview(self.maskContentView)
             
  
-            let adjustToRect = toImageView.convertRect(toImageView.bounds, toView: containView)
+            let adjustToRect = toImageView.convert(toImageView.bounds, to: containView)
 
             imageView = UIImageView(frame: adjustFromRect)
             imageView.image = fromImageView.image
             containView.addSubview(imageView)
             
             //Set up shadow
-            imageView.layer.shadowColor = UIColor.blackColor().CGColor
-            imageView.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+            imageView.layer.shadowColor = UIColor.black.cgColor
+            imageView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
             imageView.layer.shadowRadius = 10.0
             imageView.layer.shadowOpacity = 0.8
             
             //Animation phase 1,change transform and frame
-            UIView.animateWithDuration(0.5 / 1.6 * self.config.presentDuration, animations: {
+            UIView.animate(withDuration: 0.5 / 1.6 * self.config.presentDuration, animations: {
                 self.imageView.frame = adjustToRect
-                self.imageView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+                self.imageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             }) { (finished) in
                 //Animation phase 2,change transform to default,clear shadow
-                UIView.animateWithDuration(0.3 / 1.6 * self.config.presentDuration, animations: {
-                    self.imageView.transform = CGAffineTransformIdentity
+                UIView.animate(withDuration: 0.3 / 1.6 * self.config.presentDuration, animations: {
+                    self.imageView.transform = CGAffineTransform.identity
                     self.imageView.layer.shadowOpacity = 0.0
                 }) { (finished) in
                     //Animation phase 3,start mask animation
                     containView.addSubview(toView)
-                    containView.bringSubviewToFront(self.imageView)
-                    let adjustFrame = self.imageView.convertRect(self.imageView.bounds, toView: self.maskContentView)
+                    containView.bringSubview(toFront: self.imageView)
+                    let adjustFrame = self.imageView.convert(self.imageView.bounds, to: self.maskContentView)
                     toView.maskFrom(adjustFrame, duration: 0.8 / 1.6 * self.config.presentDuration,complete: {
                         self.maskContentView.removeFromSuperview()
                         self.imageView.removeFromSuperview()
                         self.maskContentView = nil
                         self.imageView = nil
                         transitionContext.completeTransition(true)
-                        toImageView.hidden = false
-                        fromImageView.hidden = false
+                        toImageView.isHidden = false
+                        fromImageView.isHidden = false
                     })
                 }
             }
@@ -97,25 +97,25 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
             
             let fromImageView = self.config.fromImageView
             let toImageView = self.config.toImageView!
-            fromImageView.hidden = true
-            toImageView.hidden = true
-            let adjustFromRect = fromImageView.convertRect(fromImageView.bounds, toView: containView)
-            let adjustToRect = toImageView.convertRect(toImageView.bounds, toView: containView)
+            fromImageView.isHidden = true
+            toImageView.isHidden = true
+            let adjustFromRect = fromImageView.convert(fromImageView.bounds, to: containView)
+            let adjustToRect = toImageView.convert(toImageView.bounds, to: containView)
             imageView = UIImageView(frame:adjustToRect)
             imageView.image = fromImageView.image
             containView.addSubview(imageView)
             
             //Animation phase 1,animate mask
-            containView.bringSubviewToFront(self.imageView)
-            containView.sendSubviewToBack(maskContentView)
-            let adjustFrame = self.imageView.convertRect(self.imageView.bounds, toView: self.maskContentView)
+            containView.bringSubview(toFront: self.imageView)
+            containView.sendSubview(toBack: maskContentView)
+            let adjustFrame = self.imageView.convert(self.imageView.bounds, to: self.maskContentView)
             fromView.maskTo(adjustFrame, duration: 0.8 / 1.3 * self.config.dismissDuration,complete: {
                 //Set up shadow
-                self.imageView.layer.shadowColor = UIColor.blackColor().CGColor
-                self.imageView.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+                self.imageView.layer.shadowColor = UIColor.black.cgColor
+                self.imageView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
                 self.imageView.layer.shadowRadius = 10.0
                 self.imageView.layer.shadowOpacity = 0.8
-                UIView.animateWithDuration(0.5 / 1.3 * self.config.dismissDuration, animations: {
+                UIView.animate(withDuration: 0.5 / 1.3 * self.config.dismissDuration, animations: {
                     self.imageView.frame = adjustFromRect
                 }) { (finished) in
                     self.maskContentView.removeFromSuperview()
@@ -125,8 +125,8 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
                     self.config.toImageView = nil
                     containView.addSubview(toView)
                     transitionContext.completeTransition(true)
-                    toImageView.hidden = false
-                    fromImageView.hidden = false
+                    toImageView.isHidden = false
+                    fromImageView.isHidden = false
                     //Animation phase 2,change transform to default,clear shadow
                 }
 
@@ -134,7 +134,7 @@ class ImageMaskAnimator: NSObject,UIViewControllerAnimatedTransitioning {
         }
 
     }
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return self.transitionType == .Present ? self.config.presentDuration:self.config.dismissDuration
     }
 }
