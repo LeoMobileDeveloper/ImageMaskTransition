@@ -33,7 +33,7 @@ Present then Dismiss
 CocoaPod
 
 ```
-pod "ImageMaskTransition"
+pod 'ImageMaskTransition', '~> 0.1.1'
 ```
 
 
