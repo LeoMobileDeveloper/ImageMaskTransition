@@ -23,10 +23,11 @@ Present then Dismiss
 ## Require
 
 - iOS 8
-- Swift 2
+- Swift 3.0
 
 !!!!!You need to run the Demo Project on device to see blur effect
 
+For Swift 2.3,See branch [Swift2](https://github.com/LeoMobileDeveloper/ImageMaskTransition/tree/Swift2)
 
 ## Install
 
@@ -54,7 +55,7 @@ let dvc = DetailViewController()
 let config = TransitionConfig.defaultConfig(fromImageView: cell.imageView, toImageView:dvc.imageView)
 imageMaskTransiton =  ImageMaskTransition(config: config)
 dvc.transitioningDelegate = imageMaskTransiton
-presentViewController(dvc, animated: true, completion: nil)
+present(dvc, animated: true, completion: nil)
 ```
 
 Push a ViewController
