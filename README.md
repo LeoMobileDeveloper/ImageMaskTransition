@@ -20,6 +20,7 @@ Present then Dismiss
 <img src="https://raw.github.com/LeoMobileDeveloper/ImageMaskTransition/master/Screenshot/demo.gif" width="200"/>
 
 </p>
+
 ## Require
 
 - iOS 8
